@@ -1,0 +1,48 @@
+alerts="ben@trmacs.com, jason+backup@trmacs.com"
+PI="ben@trmacs.com"
+
+ startTime=`/usr/libexec/PlistBuddy -c "Print ${last_entry}:startTime" /Library/Logs/CCC.stats`
+ 
+
+To Build:
+/usr/libexec/PlistBuddy -c  "Add :PI string 'ben@trmacs.com'" /Library/Scripts/trmacs/address.plist
+/usr/libexec/PlistBuddy -c  "Add :alerts string 'ben@trmacs.com'" /Library/Scripts/trmacs/address.plist
+/usr/libexec/PlistBuddy -c  "Add :SendPILogs bool True" /Library/Scripts/trmacs/address.plist
+
+
+/usr/libexec/PlistBuddy -c  "Set :PI string 'ben@trmacs.com'" /Library/Scripts/trmacs/address.plist
+/usr/libexec/PlistBuddy -c  "Set :alerts string 'ben@trmacs.com'" /Library/Scripts/trmacs/address.plist
+/usr/libexec/PlistBuddy -c  "Set :SendPILogs True" /Library/Scripts/trmacs/address.plist
+
+
+To get data pulled:
+
+/usr/libexec/PlistBuddy -c  "Print PI" /Library/Scripts/trmacs/address.plist
+/usr/libexec/PlistBuddy -c  "Print alerts" /Library/Scripts/trmacs/address.plist
+
+
+TO Build curled on web server:
+/usr/libexec/PlistBuddy -c  "Add :PIEnabled bool True" /Library/Scripts/trmacs/hostname.plist
+/usr/libexec/PlistBuddy -c  "Add :PI string 'ben@trmacs.com'" /Library/Scripts/trmacs/hostname.plist
+/usr/libexec/PlistBuddy -c  "Add :alerts string 'ben@trmacs.com'" /Library/Scripts/trmacs/hostname.plist
+/usr/libexec/PlistBuddy -c  "Add :SendPILogs bool True" /Library/Scripts/trmacs/hostname.plist
+/usr/libexec/PlistBuddy -c  "Add :EveryDay bool False" /Library/Scripts/trmacs/hostname.plist
+
+
+
+To build addresses.plist:
+
+/usr/libexec/PlistBuddy -c  "Add :Addresses dict" ~/Dropbox/Code\ Repositories/Bash/Checking\ Scripts/Private\ Eyes/bash/address.plist
+/usr/libexec/PlistBuddy -c  "Add :Addresses:alerts array" ~/Dropbox/Code\ Repositories/Bash/Checking\ Scripts/Private\ Eyes/bash/address.plist
+/usr/libexec/PlistBuddy -c  "Add :Addresses:alerts:0 'ben@trmacs.com'" ~/Dropbox/Code\ Repositories/Bash/Checking\ Scripts/Private\ Eyes/bash/address.plist
+/usr/libexec/PlistBuddy -c  "Add :Addresses:alerts:1 string 'jason+backup@trmacs.com'" ~/Dropbox/Code\ Repositories/Bash/Checking\ Scripts/Private\ Eyes/bash/address.plist
+
+
+/usr/libexec/PlistBuddy -c  "Add :PI string ''" ~/Dropbox/Code\ Repositories/Bash/Checking\ Scripts/Private\ Eyes/bash/address.plist
+
+
+
+
+
+/usr/libexec/PlistBuddy -c "Print alerts" ~/Dropbox/Code\ Repositories/Bash/Checking\ Scripts/Private\ Eyes/bash/address.plist
+/usr/libexec/PlistBuddy -c "Print PI" ~/Dropbox/Code\ Repositories/Bash/Checking\ Scripts/Private\ Eyes/bash/address.plist

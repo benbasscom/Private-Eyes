@@ -1,0 +1,72 @@
+Conditions:
+Everyday = False
+IsWeekDay = False
+SendPILogs = True
+
+
+HostName: not set
+-------------------------------------------
+Sat Nov  2 20:34:35 EDT 2013
+PInotify-0.6.1
+Creating log files
+done
+Compressing source files
+Mailing of the log files has been disabled, no e-mail has been sent
+Removing raw log files and moving the compressed version to the archive
+Closing
+
+--------------------------------------------------------------------------------------
+
+Conditions:
+Everyday = True
+IsWeekDay = False
+SendPILogs = True
+
+HostName: not set
+-------------------------------------------
+Sat Nov  2 20:37:03 EDT 2013
+PInotify-0.6.1
+Creating log files
+done
+Compressing source files
+uuencoding source files and mailing to ''
+Removing raw log files and moving the compressed version to the archive
+Closing
+
+--------------------------------------------------------------------------------------
+
+Conditions:
+Everyday = True
+IsWeekDay = True
+SendPILogs = True
+
+HostName: not set
+-------------------------------------------
+Sat Nov  2 20:38:30 EDT 2013
+PInotify-0.6.1
+Creating log files
+done
+Compressing source files
+uuencoding source files and mailing to ''
+Removing raw log files and moving the compressed version to the archive
+Closing
+
+--------------------------------------------------------------------------------------
+
+Conditions:
+Everyday = True
+IsWeekDay = True
+SendPILogs = False
+
+HostName: not set
+-------------------------------------------
+Sat Nov  2 20:39:12 EDT 2013
+PInotify-0.6.1
+Creating log files
+done
+Compressing source files
+uuencoding source files and mailing to ''
+Removing raw log files and moving the compressed version to the archive
+Closing
+
+--------------------------------------------------------------------------------------

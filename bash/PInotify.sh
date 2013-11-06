@@ -71,7 +71,7 @@ fi
 if [[ "$SendPILogs" = "true" ]] && [[ "$EveryDay" = "true" ]] && [[ "$IsWeekday" = "true" ]]; then
 	
 	#uuencode the resulting tar'd file and pipe through to mail to send.
-	echo "uuencoding source files and mailing to '$to' true, true, true"
+	echo "uuencoding source files and mailing to '$to'"
 	uuencode "$attachment" "$attach_name" | mail -s "$subject" "$to"	
 fi 
 
@@ -79,7 +79,7 @@ fi
 if [[ "$SendPILogs" = "true" ]] && [[ "$EveryDay" = "true" ]] && [[ "$IsWeekday" = "false" ]]; then
 
 	# uuencode the resulting tar'd file and pipe through to mail to send.
-	echo "uuencoding source files and mailing to '$to' true, true, false"
+	echo "uuencoding source files and mailing to '$to'"
 	uuencode "$attachment" "$attach_name" | mail -s "$subject" "$to"
 fi
 
@@ -87,7 +87,7 @@ fi
 if [[ "$SendPILogs" = "true" ]] && [[ "$EveryDay" = "false" ]] && [[ "$IsWeekday" = "true" ]]; then
 
 	# uuencode the resulting tar'd file and pipe through to mail to send.
-	echo "uuencoding source files and mailing to '$to' true, false, true"
+	echo "uuencoding source files and mailing to '$to'"
 	uuencode "$attachment" "$attach_name" | mail -s "$subject" "$to"
 fi 
 

@@ -2,9 +2,11 @@
 # Created by Ben Bass
 # Copyright 2012 Technology Revealed. All rights reserved.
 # PI checkin
-vers="pi-checkin-0.2"
+vers="pi-checkin-0.3"
 # 0.1 Initial testing
 # 0.2 Populates empty settings.plist
+# 0.3 HostName as Name, and ComputerName if hostname is not set.
+
 
 # Curls remote settings from the server.
 # loads or unloads com.trmacs.pinotify.plist if PIEnabled is false
@@ -15,7 +17,17 @@ err_log="/Library/Logs/com.trmacs/pi-checkin-err.log"
 exec 1>> "${log}" 
 exec 2>> "${err_log}"
 when=$(date +%Y-%m-%d)
-NAME=`scutil --get ComputerName`
+#NAME=`scutil --get ComputerName`
+
+# Get the hosts name. Using Computername if HostName is not set.
+host_raw="$(scutil --get HostName)"
+
+if [ -z "$host_raw" ]; then
+	NAME="$(scutil --get ComputerName)"
+else	
+	NAME="$host_raw"
+fi
+
 
 # Grab remote settings - grab default if none specific for the computer.
 remote=$(curl -s http://munki.benbass.com:9000/pi/"$NAME".plist)

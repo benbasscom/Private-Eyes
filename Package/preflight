@@ -1,0 +1,90 @@
+#!/bin/bash
+# Preflight script for appleraidcheck package.
+# Need to create log files/log destination.
+vers="pinotify_preflight_v.0.4"
+
+# check for Log directory
+
+echo "$vers"
+
+log_root="/Library/Logs/com.trmacs/"
+pi_dir="/Library/Logs/com.trmacs/pi/"
+current_dir="/Library/Logs/com.trmacs/pi/current"
+archive_dir="/Library/Logs/com.trmacs/pi/archive"
+transfer_dir="/Library/Logs/com.trmacs/pi/transfer"
+
+if [ -d "$log_root" ]; then
+	
+echo ""$log_root" exists."
+
+else
+	echo "Creating "$log_root"."
+	mkdir "$log_root"
+	echo "done."
+fi
+if [ -d "$pi_dir" ]; then
+
+	echo ""$pi_dir" exists."
+
+else
+	echo "Creating "$pi_dir"."
+	mkdir "$pi_dir"
+	echo "done."
+fi
+if [ -d "$current_dir" ]; then
+
+	echo ""$current_dir" exists."
+
+else
+	echo "Creating "$current_dir"."
+	mkdir "$current_dir"
+	echo "done."
+fi
+if [ -d "$archive_dir" ]; then
+
+	echo ""$archive_dir" exists."
+
+else
+	echo "Creating "$archive_dir"."
+	mkdir "$archive_dir"
+	echo "done."
+fi
+if [ -d "$transfer_dir" ]; then
+
+	echo ""$transfer_dir" exists."
+
+else
+	echo "Creating "$transfer_dir"."
+	mkdir "$transfer_dir"
+	echo "done."
+fi
+
+# checking for previous trdaily and renaming.
+when=$(date +%Y-%m-%d-%H-%M)
+
+echo "Checking for previous trdaily.sh scripts."
+if [ -e /Library/Scripts/trmacs/trdaily.sh ]; then
+
+	echo "trdaily.sh exists, renaming to trdaily.bk."$when".sh"
+	mv /Library/Scripts/trmacs/trdaily.sh /Library/Scripts/trmacs/trdaily.bk."$when".sh
+	echo "done."
+else
+	echo "No previous version to rename"
+
+fi
+# Checks to see if the launchd is loaded, and if not null (-n), then unload it.
+launchd_chk="$(launchctl list | grep trmacs.pinotify)"
+
+echo "checking for previously loaded plist."
+
+if [ -n "$launchd_chk" ]; then
+
+	echo "previous version found, unloading"
+	launchctl unload -w /Library/LaunchDaemons/com.trmacs.pinotify.plist
+	echo "done"
+else
+	echo "No previous version found, nothing to unload."
+fi
+
+echo "exiting"
+exit 0

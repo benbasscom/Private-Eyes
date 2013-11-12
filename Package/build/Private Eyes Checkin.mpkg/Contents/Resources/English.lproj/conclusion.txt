@@ -1,0 +1,4 @@
+Next Steps
+
+1.  Change the notification e-mail in each script in /Library/Scripts/trmacs. 
+2.  Customize the trdaily.sh to pull other logs specific to this computer.  If you do not want or need them, you can comment out the trdaily.sh from the main PInotify script.

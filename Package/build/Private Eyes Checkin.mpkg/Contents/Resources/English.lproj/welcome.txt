@@ -1,0 +1,5 @@
+Welcome to the Technology Revealed Private Eyes Automation Installer.  Please select the individual package you wish to install.
+
+Don't forget to modify the notification e-mail addresses as needed.
+
+Thank you!

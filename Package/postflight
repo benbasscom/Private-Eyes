@@ -1,0 +1,14 @@
+#!/bin/bash
+
+launchctl load /Library/LaunchDaemons/com.trmacs.pinotify.plist
+# loads the just installed launchdaemon.  If previously loaded, was unloaded in Preflight.
+vers="pinotify_postflight_v.0.2"
+
+echo "$vers"
+echo "loading /Library/LaunchDaemons/com.trmacs.pinotify.plist"
+launchctl load -w /Library/LaunchDaemons/com.trmacs.pinotify.plist
+
+echo "done"
+echo "exiting"
+
+exit 0

@@ -16,11 +16,11 @@
 	<array>
 		<dict>
 			<key>Hour</key>
-			<integer>1</integer>
+			<integer>4</integer>
 			<key>Minute</key>
 			<integer>0</integer>
 			<key>Weekday</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>Hour</key>

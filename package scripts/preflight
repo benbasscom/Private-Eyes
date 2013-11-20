@@ -1,7 +1,7 @@
 #!/bin/bash
 # Preflight script for appleraidcheck package.
 # Need to create log files/log destination.
-vers="pinotify_preflight_v.0.4"
+vers="pinotify_preflight_v.0.5"
 
 # check for Log directory
 
@@ -81,6 +81,8 @@ if [ -n "$launchd_chk" ]; then
 
 	echo "previous version found, unloading"
 	launchctl unload -w /Library/LaunchDaemons/com.trmacs.pinotify.plist
+	launchctl unload -w /Library/LaunchDaemons/com.trmacs.pi-checkin.plist
+	launchctl unload -w /Library/LaunchDaemons/com.trmacs.pi-schedule.plist
 	echo "done"
 else
 	echo "No previous version found, nothing to unload."

@@ -2,10 +2,11 @@
 # Created by Ben Bass
 # Copyright 2012 Technology Revealed. All rights reserved.
 # PI checkin
-vers="pi-checkin-0.3"
+vers="pi-checkin-0.4"
 # 0.1 Initial testing
 # 0.2 Populates empty settings.plist
 # 0.3 HostName as Name, and ComputerName if hostname is not set.
+$ 0.4 Moving to miniserver.trmacs.com for checkins.
 
 
 # Curls remote settings from the server.
@@ -30,12 +31,12 @@ fi
 
 
 # Grab remote settings - grab default if none specific for the computer.
-remote=$(curl -s http://munki.benbass.com:9000/pi/"$NAME".plist)
+remote=$(curl -s http://miniserver.trmacs.com/pi/"$NAME".plist)
 remote_chck="$(echo "$remote" | head -1 | cut -c 2)" 
 
 # if not a valid plist and a http error code the second character will be a ! instead of a ?
 if [ "$remote_chck" = ! ]; then
-	remote=$(curl -s http://munki.benbass.com:9000/pi/default.plist)
+	remote=$(curl -s http://miniserver.trmacs.com/pi/default.plist)
 fi
 
 echo "$remote" > /Library/Scripts/trmacs/"$NAME".plist

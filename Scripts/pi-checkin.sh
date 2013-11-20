@@ -2,11 +2,12 @@
 # Created by Ben Bass
 # Copyright 2012 Technology Revealed. All rights reserved.
 # PI checkin
-vers="pi-checkin-0.4"
+vers="pi-checkin-0.5
 # 0.1 Initial testing
 # 0.2 Populates empty settings.plist
 # 0.3 HostName as Name, and ComputerName if hostname is not set.
-$ 0.4 Moving to miniserver.trmacs.com for checkins.
+# 0.4 Moving to miniserver.trmacs.com for checkins.
+# 0.5 Removed spaces from NAME when using ComputerName
 
 
 # Curls remote settings from the server.
@@ -24,11 +25,10 @@ when=$(date +%Y-%m-%d)
 host_raw="$(scutil --get HostName)"
 
 if [ -z "$host_raw" ]; then
-	NAME="$(scutil --get ComputerName)"
+	NAME="$(scutil --get ComputerName | sed 's/ //g')"
 else	
 	NAME="$host_raw"
 fi
-
 
 # Grab remote settings - grab default if none specific for the computer.
 remote=$(curl -s http://miniserver.trmacs.com/pi/"$NAME".plist)

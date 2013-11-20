@@ -2,7 +2,7 @@
 # Created by Ben Bass
 # Copyright 2012 Technology Revealed. All rights reserved.
 # PI checkin
-vers="pi-checkin-0.5
+vers="pi-checkin-0.5"
 # 0.1 Initial testing
 # 0.2 Populates empty settings.plist
 # 0.3 HostName as Name, and ComputerName if hostname is not set.
@@ -19,7 +19,6 @@ err_log="/Library/Logs/com.trmacs/pi-checkin-err.log"
 exec 1>> "${log}" 
 exec 2>> "${err_log}"
 when=$(date +%Y-%m-%d)
-#NAME=`scutil --get ComputerName`
 
 # Get the hosts name. Using Computername if HostName is not set.
 host_raw="$(scutil --get HostName)"

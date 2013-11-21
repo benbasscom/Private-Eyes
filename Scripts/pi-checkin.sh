@@ -2,13 +2,13 @@
 # Created by Ben Bass
 # Copyright 2012 Technology Revealed. All rights reserved.
 # PI checkin
-vers="pi-checkin-0.5"
+vers="pi-checkin-0.5.1"
 # 0.1 Initial testing
 # 0.2 Populates empty settings.plist
 # 0.3 HostName as Name, and ComputerName if hostname is not set.
 # 0.4 Moving to miniserver.trmacs.com for checkins.
 # 0.5 Removed spaces from NAME when using ComputerName
-
+# 0.5.1 Changed remote check character to match new web server.
 
 # Curls remote settings from the server.
 # loads or unloads com.trmacs.pinotify.plist if PIEnabled is false
@@ -34,7 +34,7 @@ remote=$(curl -s http://miniserver.trmacs.com/pi/"$NAME".plist)
 remote_chck="$(echo "$remote" | head -1 | cut -c 2)" 
 
 # if not a valid plist and a http error code the second character will be a ! instead of a ?
-if [ "$remote_chck" = ! ]; then
+if [ "$remote_chck" = "H" ]; then
 	remote=$(curl -s http://miniserver.trmacs.com/pi/default.plist)
 fi
 

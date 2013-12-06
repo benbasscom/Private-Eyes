@@ -119,5 +119,7 @@ Update PInotify.sh to pull info from hostname.plist
 
 To Do:
 Update TRDaily to possibly pull the tail of the checkin logs?
+Add error checking in case of a corrput/partially downloaded plist.  
+	Something like if PI key is null, then set to ben@trmacs, if PIEnabled = null, then set to true.
 
 

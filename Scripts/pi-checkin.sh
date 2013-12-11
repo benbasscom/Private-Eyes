@@ -2,7 +2,7 @@
 # Created by Ben Bass
 # Copyright 2012 Technology Revealed. All rights reserved.
 # PI checkin
-vers="pi-checkin-0.6.0"
+vers="pi-checkin-0.6.1"
 # 0.1 Initial testing
 # 0.2 Populates empty settings.plist
 # 0.3 HostName as Name, and ComputerName if hostname is not set.
@@ -40,9 +40,17 @@ if [ "$remote_chck" = "H" ]; then
 	remote=$(curl -s http://miniserver.trmacs.com/pi/default.plist)
 	remote_md5_plist=$(curl -s http://miniserver.trmacs.com/pi/default.md5.plist)
 	remote_hash="$(curl -s http://miniserver.trmacs.com/pi/default.plist | md5)"
+		# If the settings.plist does not exist, Merge it with the curled version
+		if [ ! -f /Library/Scripts/trmacs/settings.plist ]; then 
+		/usr/libexec/PlistBuddy -c  "Merge /Library/Scripts/trmacs/"$NAME".plist" /Library/Scripts/trmacs/settings.plist
+		fi
 	else
 	remote_md5_plist=$(curl -s http://miniserver.trmacs.com/pi/"$NAME".md5.plist)
 	remote_hash="$(curl -s http://miniserver.trmacs.com/pi/"$NAME".plist | md5)"
+	# If the settings.plist does not exist, Merge it with the curled version
+	if [ ! -f /Library/Scripts/trmacs/settings.plist ]; then 
+	/usr/libexec/PlistBuddy -c  "Merge /Library/Scripts/trmacs/"$NAME".plist" /Library/Scripts/trmacs/settings.plist
+	fi
 fi
 
 #writing out curled files.

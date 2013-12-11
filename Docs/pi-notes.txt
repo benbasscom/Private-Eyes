@@ -121,5 +121,25 @@ To Do:
 Update TRDaily to possibly pull the tail of the checkin logs?
 Add error checking in case of a corrput/partially downloaded plist.  
 	Something like if PI key is null, then set to ben@trmacs, if PIEnabled = null, then set to true.
+	
+md5 of the file on the server - compare it with the local previously downloaded hostname.plist.  Do not delete hostname.plist.
+Where to store md5?
+
+store md5 as a string in settings?
+if md5 does not match, then download.
+If remote is null, or md5 is the same, continue with settings, do not change anything.
+need to store md5 of the remote file to have it match what is downloaded so we do not get corrupt files.
+hostname.md5.plist with one string, the md5 of the hostname.plist.
+
+1. curl hostname.plist
+2. curl hostname.md5.plist
+3. /usr/libexec/PlistBuddy -c  "Print hash" /Library/Scripts/trmacs/"$NAME".md5.plist
+3. compare hash saved in hostname.md5.plist to md5 of hostname.plist.
+If they are the same, continue, if not report error, re-download hostname.plist, and compare again.
+4.  If still not the same, continue with existing settings.plist
+5.  if both md5's match, then compare that md5 to the stored md5 in settings.plist.  If the same, continue with settings.plist.
+6.  If the saved md5 does not match the one stored in settings.plist - apply settings from hostname.plist (what happens every time now)
+7.  Then store the new md5 in the updated settings.plist.
 
 
+Need to figure out the easiest way to upgrade existing versions - possibly have the pre/post flight on the installers create / add the necessary parts to the settings.plist.

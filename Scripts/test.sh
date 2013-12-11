@@ -1,27 +1,9 @@
-#!/bin/bash
+#!/bin/bash -x
 # Created by Ben Bass
 # Copyright 2012 Technology Revealed. All rights reserved.
 # PI checkin
 vers="pi-checkin-0.6.0"
-# 0.1 Initial testing
-# 0.2 Populates empty settings.plist
-# 0.3 HostName as Name, and ComputerName if hostname is not set.
-# 0.4 Moving to miniserver.trmacs.com for checkins.
-# 0.5 Removed spaces from NAME when using ComputerName
-# 0.5.1 Changed remote check character to match new web server.
-# 0.6.0 First shot at md5 hashing the plists.  Need to create md5.plist for each machine as well.
 
-# Curls remote settings from the server.
-# loads or unloads com.trmacs.pinotify.plist if PIEnabled is false
-# loads com.trmacs.pinotify.plist if PIEnabled is true.
-
-log="/Library/Logs/com.trmacs/pi-checkin.log"
-err_log="/Library/Logs/com.trmacs/pi-checkin-err.log"
-exec 1>> "${log}" 
-exec 2>> "${err_log}"
-when=$(date +%Y-%m-%d)
-
-# Get the hosts name. Using Computername if HostName is not set.
 host_raw="$(scutil --get HostName)"
 
 if [ -z "$host_raw" ]; then
@@ -51,23 +33,16 @@ echo "$remote_md5_plist" > /Library/Scripts/trmacs/"$NAME".md5.plist
 
 #Getting the stored & correct md5 of the downloaded file from the secondary stored plist.
 remote_md5=`/usr/libexec/PlistBuddy -c "Print :hash" /Library/Scripts/trmacs/"$NAME".md5.plist`
+#md5 of the actually downloaded hostname.plist
+#remote_hash="$(curl -s http://miniserver.trmacs.com/pi/"$NAME".plist | md5)"
 
 
-#############################################################################################
-#  Use these for testing what each of the md5's actually are.
-#echo "This is the remote_md5 - pulled from the md5.plist"
-#echo "$remote_md5"
-#echo ""
-#echo "This is the remote_hash - pulled from md5'ing the remote file."
-#echo "$remote_hash"
-#############################################################################################
+echo "This is the remote_md5 - pulled from the md5.plist"
+echo "$remote_md5"
+echo ""
+echo "This is the remote_hash - pulled from md5'ing the remote file."
+echo "$remote_hash"
 
-
-#############################################################################################
-#  Checking if the specified md5 matches the generated md5.
-#  If not, re-downloads the files and checks the hashes again.
-#  If we still have a mis match - continue on using the existing settings.plist.
-#############################################################################################
 
 if [ "$remote_md5" != "$remote_hash" ]; then
 	echo "Remote hash mismatch, using existing settings.plist"
@@ -111,7 +86,7 @@ if [ "$remote_md5" = "$remote_hash" ]; then
 				SendPILogs="$(/usr/libexec/PlistBuddy -c  "Print SendPILogs" /Library/Scripts/trmacs/"$NAME".plist)"
 				EveryDay="$(/usr/libexec/PlistBuddy -c  "Print EveryDay" /Library/Scripts/trmacs/"$NAME".plist)"
 				echo "Updating settings.plist"
-				#Set settings from downloaded plist into settings.plist
+				#Set settings from downloaded plist into settings.plist and update hash for future use.
 				/usr/libexec/PlistBuddy -c  "Set PIEnabled "$PIEnabled"" /Library/Scripts/trmacs/settings.plist
 				/usr/libexec/PlistBuddy -c  "Set PI "$PI"" /Library/Scripts/trmacs/settings.plist
 				/usr/libexec/PlistBuddy -c  "Set alerts "$alerts"" /Library/Scripts/trmacs/settings.plist
@@ -128,6 +103,7 @@ launchd_chk="$(launchctl list | grep trma | grep com.trmacs.pinotify)"
 PIEnabled="$(/usr/libexec/PlistBuddy -c  "Print PIEnabled" /Library/Scripts/trmacs/settings.plist)"
 
 if [ "$PIEnabled" = "false" ]; then
+
 # Checks to see if the launchd is loaded, and if not null (-n), then loads it.
 	if [ -n "$launchd_chk" ]; then
 		launchctl unload -w /Library/LaunchDaemons/com.trmacs.pinotify.plist
@@ -144,10 +120,8 @@ if [ "$PIEnabled" = "true" ]; then
 fi
 
 #Cleanup remote downloaded file.
-#echo "Deleting /Library/Scripts/trmacs/"$NAME".plist"
-#rm -rf /Library/Scripts/trmacs/"$NAME".plist
-
-
-
+echo "Deleting /Library/Scripts/trmacs/"$NAME".plist & /Library/Scripts/trmacs/"$NAME".md5.plist"
+rm -rf /Library/Scripts/trmacs/"$NAME".plist
+rm -rf /Library/Scripts/trmacs/"$NAME".md5.plist
 
 exit 0

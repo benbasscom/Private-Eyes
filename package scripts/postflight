@@ -15,6 +15,10 @@ sleep 2
 #running pi-schedule again to set IsWeekday
 /Library/Scripts/trmacs/pi-schedule.sh
 
+# Manually adding the necessary framework for settings.plist
+/usr/libexec/PlistBuddy -c "Add :hash string 00000000000000000000000000000000" /Library/Scripts/trmacs/settings.plist
+
+
 echo "done"
 echo "exiting"
 
